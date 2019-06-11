@@ -5,6 +5,12 @@ class ProductsController < ApplicationController
     render json: @products
   end
 
+  def show
+    @product = Product.where(id: params[:id])
+    render json: @product
+  end
+
+
   #show a specific product
   def name
     @products = Product.where(product_name: params[:name])
