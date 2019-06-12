@@ -10,6 +10,13 @@ class ProductsController < ApplicationController
     render json: @product
   end
 
+  def random
+    random = rand(Product.count)
+    @product = Product.find_by(id: random)
+    render json: @product
+
+  end
+
 
   #show a specific product
   def name
