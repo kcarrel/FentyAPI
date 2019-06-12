@@ -17,6 +17,11 @@ class ProductsController < ApplicationController
     render json: @products
   end
 
+  # def ingredient
+  #   @products = Product.where("ingredient_list.includes(params[:ingredient])")
+  #   render json: @products
+  # end
+
   #find generalized color groups
   def color
     @products = Product.where(color_group: params[:color])
@@ -26,7 +31,7 @@ class ProductsController < ApplicationController
 
   #find by collection name (e.g poutsicle or pro kiss'r)
   def collection
-    @products = Product.where(parent: params[:parent])
+    @products = Product.where(parent: params[:collection])
     render json:@products
   end
 
