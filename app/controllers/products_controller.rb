@@ -24,21 +24,54 @@ class ProductsController < ApplicationController
     render json: @products
   end
 
-  # def ingredient
-  #   @products = Product.where("ingredient_list.includes(params[:ingredient])")
-  #   render json: @products
-  # end
+  def ingredient
+    ingredient = params[:ingredient]
+    @products = Product.where(
+      Product.arel_table[:ingredient_list]
+      .lower
+      .matches("%#{ingredient.downcase}%")
+    )
+    render json: @products
+  end
 
-  #find generalized color groups
+  #find by price point
+  def price
+    price = params[:price]
+    @products = Product.where(price: params[:price])
+    render json: @products
+  end
+
+  #find by generalized color group
   def color
-    @products = Product.where(color_group: params[:color])
+    color = params[:color]
+    @products = Product.where(
+      Product.arel_table[:color_group]
+      .lower
+      .matches("%#{color.downcase}%")
+    )
     render json: @products
   end
 
 
   #find by collection name (e.g poutsicle or pro kiss'r)
   def collection
-    @products = Product.where(parent: params[:collection])
+    collection = params[:collection]
+    @products = Product.where(
+      Product.arel_table[:parent]
+      .lower
+      .matches("%#{collection.downcase}%")
+    )
+    render json:@products
+  end
+
+  #find by specific type of product
+  def type
+    type = params[:type]
+    @products = Product.where(
+      Product.arel_table[:product_type]
+      .lower
+      .matches("%#{type.downcase}%")
+    )
     render json:@products
   end
 
